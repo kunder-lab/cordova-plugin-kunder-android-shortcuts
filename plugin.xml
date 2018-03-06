@@ -10,12 +10,17 @@
     <engine name="cordova" version=">=6.0.0" />
   </engines>
 
-  <js-module src="www/AndroidShortcuts.js" name="AndroidShortcuts">
-    <merges target="AndroidShortcuts" />
+  <js-module src="www/AndroidShortcutsPlugin.js" name="AndroidShortcutsPlugin">
+    <merges target="AndroidShortcutsPlugin" />
   </js-module>
   <hook type="after_prepare" src="hooks/001_create_shortcuts_files.js"/>
 
   <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="AndroidShortcutsPlugin" >
+        <param name="android-package" value="cl.kunder.androidshortcuts.AndroidShortcutsPlugin"/>
+      </feature>
+    </config-file>
     <source-file src="src/android/cl/kunder/androidshortcuts/AndroidShortcutsPlugin.java" target-dir="src/cl/kunder/androidshortcuts" />
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
         <activity android:name=".ShortcutHelperActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
