@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  id="cordova-plugin-kunder-android-shortcuts"
+  version="1.0.0">
+  <name>cordova-plugin-kunder-android-shortcuts</name>
+  <description>Plugin Cordova que proporciona el mecanismo para definir shortcuts estáticos fácilmente.</description>
+  <author>kunder SpA</author>
+  <keywords>plugin,shortcuts,android</keywords>
+  <engines>
+    <engine name="cordova" version=">=6.0.0" />
+  </engines>
+
+  <js-module src="www/AndroidShortcuts.js" name="AndroidShortcuts">
+    <merges target="AndroidShortcuts" />
+  </js-module>
+  <hook type="after_prepare" src="hooks/001_create_shortcuts_files.js"/>
+
+  <platform name="android">
+    <!-- <source-file src="src/android/cl/kunder/androidshortcuts/ShortcutHelper.java" target-dir="src/cl/kunder/androidshortcuts" /> -->
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <activity android:name=".ShortcutHelperActivity"/>
+    </config-file>
+  </platform>
+</plugin>

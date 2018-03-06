@@ -1,0 +1,22 @@
+{
+  "name": "cordova-plugin-kunder-android-shortcuts",
+  "version": "1.0.0",
+  "description": "Plugin Cordova que proporciona el mecanismo para definir shortcuts estáticos fácilmente.",
+  "cordova": {
+    "id": "cordova-plugin-kunder-android-shortcuts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+/cordova-plugin-kunder-android-shortcuts"
+  },
+  "author": "kunder SpA 2018",
+  "private": true,
+  "bugs": {
+    "url": "cordova-plugin-kunder-android-shortcuts/issues"
+  },
+  "homepage": "cordova-plugin-kunder-android-shortcuts#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "fs": "0.0.1-security"
+  }
+}
