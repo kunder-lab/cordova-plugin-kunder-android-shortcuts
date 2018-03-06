@@ -47,14 +47,13 @@ module.exports = function(context) {
 		
 		shortcutHelperFile = shortcutHelperFile.replace('%CORDOVA_MAIN_PACKAGE%', packageName);
 
-		var packageNameArray = packageName.split('.');
-		var packageNameDIR = '';
-		for(var element of packageNameArray){
-			packageNameDIR = packageNameDIR + '/' + element;
-		}
-		process.stdout.write('*******************************');
-		process.stdout.write(packageNameDIR + '\n');
+		var packageNameDIR = packageName.replace(/\./g, '/')
+		
 		fs.writeFileSync('platforms/android/src/'+packageNameDIR+'/ShortcutHelperActivity.java', shortcutHelperFile);
+		
+		var pluginFile = fs.readFileSync('platforms/android/src/cl/kunder/androidshortcuts/AndroidShortcutsPlugin.java','utf8');
+		pluginFile = pluginFile.replace('%CORDOVA_MAIN_PACKAGE%', packageName);
+		fs.writeFileSync('platforms/android/src/cl/kunder/androidshortcuts/AndroidShortcutsPlugin.java', pluginFile);
 		
 		
 		// Modificar AndroidManifest para añadir la meta-data indicando que se debe implementar los shortcuts
@@ -82,11 +81,9 @@ module.exports = function(context) {
 			//Segundo, se deben reemplazar los strings de shortcuts por los valores del json
 			
 			if(stringFile.indexOf('<string name="shortcutShortLabel_'+i+'">') > -1){
-				process.stdout.write('<string name="shortcutShortLabel_'+i+'"> FOUND' + '\n');
 				var regex = new RegExp('\<string name\=\"shortcutShortLabel_'+i+'\"\>[ \S]*\<\/string\>', 'i');
 				stringFile = stringFile.replace(regex, '<string name="shortcutShortLabel_'+i+'">'+shortcut.shortcutShortLabel+'</string>');
 			} else{
-				process.stdout.write('<string name="shortcutShortLabel_'+i+'"> NOT_FOUND' + '\n');
 				stringFile = stringFile.replace('</resources>', '<string name="shortcutShortLabel_'+i+'">'+shortcut.shortcutShortLabel+'</string>\n</resources>');
 			}
 

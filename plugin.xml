@@ -16,9 +16,9 @@
   <hook type="after_prepare" src="hooks/001_create_shortcuts_files.js"/>
 
   <platform name="android">
-    <!-- <source-file src="src/android/cl/kunder/androidshortcuts/ShortcutHelper.java" target-dir="src/cl/kunder/androidshortcuts" /> -->
+    <source-file src="src/android/cl/kunder/androidshortcuts/AndroidShortcutsPlugin.java" target-dir="src/cl/kunder/androidshortcuts" />
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
-        <activity android:name=".ShortcutHelperActivity"/>
+        <activity android:name=".ShortcutHelperActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </config-file>
   </platform>
 </plugin>

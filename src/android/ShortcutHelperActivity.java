@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class ShortcutHelperActivity extends Activity {
     private final static String TAG = "ShortcutHelperActivity";
-    public static String ACTION = "";
+    public static String ACTION = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,5 +26,6 @@ public class ShortcutHelperActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setAction(ACTION);
         startActivity(intent);
+        finish();
     }
 }
