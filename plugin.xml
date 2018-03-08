@@ -13,9 +13,10 @@
   <js-module src="www/AndroidShortcutsPlugin.js" name="AndroidShortcutsPlugin">
     <merges target="AndroidShortcutsPlugin" />
   </js-module>
-  <hook type="after_prepare" src="hooks/001_create_shortcuts_files.js"/>
+  
 
   <platform name="android">
+    <hook type="before_prepare" src="scripts/001_create_shortcuts_files.js"/>
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="AndroidShortcutsPlugin" >
         <param name="android-package" value="cl.kunder.androidshortcuts.AndroidShortcutsPlugin"/>
