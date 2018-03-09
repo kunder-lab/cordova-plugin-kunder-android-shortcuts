@@ -1,6 +1,6 @@
 # Cordova Android Shortcuts Plugin
 
-Este es un plugin de cordova que permite, de forma estática, definir hasta 4 shortcurs, almacenando la acción del shortcut temporalmente para realizar alguna acción cuando se abra la aplicación base. Probado en proyectos basados en ionic 1, 2 y 3.
+Este es un plugin de cordova que permite, de forma estática, definir hasta 4 shortcuts, almacenando la acción del shortcut temporalmente para realizar alguna acción cuando se abra la aplicación base. Probado en proyectos basados en ionic 1, 2 y 3.
 
 ## Instalación y configuración
 
@@ -36,6 +36,12 @@ En la raíz del proyecto base, se deberá crear un archivo json llamado android-
 }
 ````
 
+Para mejorar el rendimiento en el proceso de lanzamiendo de la actividad principal, se debe configurar lo siguiente en el archivo config.xml del proyecto:
+````
+... <platform name="android">
+        <preference name="AndroidLaunchMode" value="singleInstance" />
+    ...
+````
 
 ## Obtener Shortcut seleccionado
 
@@ -56,6 +62,7 @@ AndroidShortcutsPlugin.getSelectedShortcut(function(response){
 ````
 
 Es posible que la acción sea nula. En este caso, se debería ignorar.
+Se recomienda llamar a la función getSelectedShortcut cuando el evento "resume" sea llamado.
 
 ## Licencia
 [MIT License](https://github.com/kunder-lab/cordova-plugin-kunder-android-shortcuts/blob/master/LICENSE)
