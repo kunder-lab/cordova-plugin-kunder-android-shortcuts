@@ -36,6 +36,13 @@ Then, create android-shortcuts.json file with all the information about the shor
 }
 ````
 
+To improve launch performance you should set the following into config.xml file:
+````
+... <platform name="android">
+        <preference name="AndroidLaunchMode" value="singleInstance" />
+    ...
+````
+
 ## Get Selected Shortcut
 
 This plugin saves in memory the selected action shortcut. You can get the action string using the following javascript command:
@@ -54,7 +61,8 @@ AndroidShortcutsPlugin.getSelectedShortcut(function(response){
 });
 ````
 
-It is possible that getSelectedShortcut returns a response with null action. If this happends you shoud ignore it.
+It is possible that getSelectedShortcut returns a response with null action. If this happens you should ignore it.
+As a recomendation, you should call getSelectedShortcut when "resume" event is called.
 
 ## License
 [MIT License](https://github.com/kunder-lab/cordova-plugin-kunder-android-shortcuts/blob/master/LICENSE)
