@@ -4,13 +4,17 @@
 
 This Cordova Plugin allows you to create maximum 4 Android Static Shortcuts saving in memory the selected one and get this action to do something in the base application. Tested on ionic 1, 2 and 3 based projects.
 
-## Install and configuration
+## Installing plugin
 
-First, install the plugin with the following command:
+Install the plugin with the following command:
+
 ````
 cordova plugin add https://github.com/kunder-lab/cordova-plugin-kunder-android-shortcuts.git
 ````
-Then, create android-shortcuts.json file with all the information about the shortcuts you want to create (maximum 4 shortcuts):
+
+## Static shortcuts configuration
+
+Create android-shortcuts.json file in project's root folder with all the information about the shortcuts you want to create (maximum 4 shortcuts):
 
 ````
 {
@@ -43,6 +47,37 @@ To improve launch performance you should set the following into config.xml file:
     ...
 ````
 
+## Dynamic Shortcuts
+
+### Create a dynamic shortcut
+
+This plugin allows you the following method to create shortcuts dynamically (on runtime):
+
+````
+AndroidShortcutsPlugin.createDynamicShortcut(
+    {
+        id: 'someID',
+        action: 'someAction',
+        shortLabel: 'ShortLabel',
+        longLabel: 'LongLabel',
+        icon: 'BASE64_String_icon'
+    },
+    successCallback,
+    errorCallback
+);
+````
+
+### Remove all dynamic shortcuts
+
+Use the following method to remove all dynamic shortcuts. This will not remove static shortcuts:
+
+````
+AndroidShortcutsPlugin.removeAllDynamicShortcuts(
+    successCallback,
+    errorCallback
+);
+````
+
 ## Get Selected Shortcut
 
 This plugin saves in memory the selected action shortcut. You can get the action string using the following javascript command:
@@ -68,5 +103,4 @@ As a recomendation, you should call getSelectedShortcut when "resume" event is c
 [MIT License](https://github.com/kunder-lab/cordova-plugin-kunder-android-shortcuts/blob/master/LICENSE)
 
 ## Future releases
-- Implement dynamic shortcuts
-- Improve code optimizations
+- Optimize code
