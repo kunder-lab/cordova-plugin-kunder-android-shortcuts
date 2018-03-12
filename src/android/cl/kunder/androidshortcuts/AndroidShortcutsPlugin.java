@@ -38,7 +38,7 @@ public class AndroidShortcutsPlugin extends CordovaPlugin {
                 e.printStackTrace();
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
             }
-        } else if("setDynamicShortcut".equals(action)) {
+        } else if("createDynamicShortcut".equals(action)) {
             ShortcutManager shortcutManager = this.cordova.getActivity().getSystemService(ShortcutManager.class);
             if(shortcutManager.getDynamicShortcuts().size() == 4) {
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
