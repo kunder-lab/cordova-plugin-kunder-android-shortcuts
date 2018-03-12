@@ -14,7 +14,7 @@ cordova plugin add https://github.com/kunder-lab/cordova-plugin-kunder-android-s
 
 ## Static shortcuts configuration
 
-Create android-shortcuts.json file in project's root folder with all the information about the shortcuts you want to create (maximum 4 shortcuts):
+Create a JSON file called android-shortcuts.json in the project's root folder with all the information about the shortcuts you want to create (maximum 4 shortcuts):
 
 ````
 {
@@ -51,7 +51,7 @@ To improve launch performance you should set the following into config.xml file:
 
 ### Create a dynamic shortcut
 
-This plugin allows you the following method to create shortcuts dynamically (on runtime):
+This plugin provides you the following method to create shortcuts dynamically (on runtime):
 
 ````
 AndroidShortcutsPlugin.createDynamicShortcut(
@@ -69,7 +69,7 @@ AndroidShortcutsPlugin.createDynamicShortcut(
 
 ### Remove all dynamic shortcuts
 
-Use the following method to remove all dynamic shortcuts. This will not remove static shortcuts:
+Use the following method to remove all dynamic shortcuts. The static shortcuts will not be affected:
 
 ````
 AndroidShortcutsPlugin.removeAllDynamicShortcuts(
