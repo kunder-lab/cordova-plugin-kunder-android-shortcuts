@@ -10,6 +10,15 @@ AndroidShortcutsPlugin.prototype.getSelectedShortcut = function (successCallback
     []
   );
 };
+AndroidShortcutsPlugin.prototype.setDynamicShortcut = function (params, successCallback, errorCallback) {
+  cordova.exec(
+    successCallback,
+    errorCallback,
+    "AndroidShortcutsPlugin",
+    "setDynamicShortcut",
+    [params]
+  );
+};
 
 var AndroidShortcutsPlugin = new AndroidShortcutsPlugin();
 module.exports = AndroidShortcutsPlugin;
