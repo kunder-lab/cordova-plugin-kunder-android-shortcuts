@@ -36,12 +36,12 @@ public class AndroidShortcutsPlugin extends CordovaPlugin {
                 ShortcutHelperActivity.ACTION = null;
             } catch (JSONException e) {
                 e.printStackTrace();
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
             }
         } else if("createDynamicShortcut".equals(action)) {
             ShortcutManager shortcutManager = this.cordova.getActivity().getSystemService(ShortcutManager.class);
-            if( (shortcutManager.getDynamicShortcuts().size() + shortcutManager.getManifestShortcuts().size()) == 4) {
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+            if( (shortcutManager.getDynamicShortcuts().size() + shortcutManager.getManifestShortcuts().size()) >= 4) {
+                callbackContext.error("You can not create more than 4 shortcuts");
                 return false;
             }
             Intent intent = new Intent(this.cordova.getActivity().getApplicationContext(), ShortcutHelperActivity.class);
@@ -58,6 +58,7 @@ public class AndroidShortcutsPlugin extends CordovaPlugin {
                         .setIntent(intent)
                         .build();
                 shortcutManager.setDynamicShortcuts(Arrays.asList(shortcutInfo));
+                callbackContext.success();
             } catch (JSONException e) {
                 e.printStackTrace();
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
@@ -66,6 +67,7 @@ public class AndroidShortcutsPlugin extends CordovaPlugin {
         } else if("removeAllDynamicShortcuts".equals(action)) {
             ShortcutManager shortcutManager = this.cordova.getActivity().getSystemService(ShortcutManager.class);
             shortcutManager.removeAllDynamicShortcuts();
+            callbackContext.success();
         } else {
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
         }
