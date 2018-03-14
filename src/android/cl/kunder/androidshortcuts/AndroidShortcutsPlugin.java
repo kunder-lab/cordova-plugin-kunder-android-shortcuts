@@ -1,6 +1,7 @@
 package cl.kunder.androidshortcuts;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
@@ -24,10 +25,12 @@ import %CORDOVA_MAIN_PACKAGE%.ShortcutHelperActivity;
 public class AndroidShortcutsPlugin extends CordovaPlugin {
 
     private static final String TAG = "AndroidShortcutsPlugin";
+    private Context context = null;
     public AndroidShortcutsPlugin(){}
 
     @TargetApi(25)
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) {
+        context = this.cordova.getActivity().getApplicationContext();
         if("getSelectedShortcut".equals(action)) {
             JSONObject response = new JSONObject();
             try {
@@ -41,6 +44,10 @@ public class AndroidShortcutsPlugin extends CordovaPlugin {
         } else if("createDynamicShortcut".equals(action)) {
             ShortcutManager shortcutManager = this.cordova.getActivity().getSystemService(ShortcutManager.class);
             if( (shortcutManager.getDynamicShortcuts().size() + shortcutManager.getManifestShortcuts().size()) >= 4) {
+                /**
+                 * TODO
+                 * Override one of the dynamic shortcuts
+                 */
                 callbackContext.error("You can not create more than 4 shortcuts");
                 return false;
             }
@@ -48,15 +55,26 @@ public class AndroidShortcutsPlugin extends CordovaPlugin {
             try {
                 JSONObject jsonObject = new JSONObject(args.getString(0));
                 intent.setAction(jsonObject.getString("action"));
-                String encodedImage = jsonObject.getString("icon");
-                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(this.cordova.getActivity(), jsonObject.getString("id"))
-                        .setShortLabel(jsonObject.getString("shortLabel"))
-                        .setLongLabel(jsonObject.getString("longLabel"))
-                        .setIcon(Icon.createWithBitmap(decodedByte))
-                        .setIntent(intent)
-                        .build();
+                String icon = jsonObject.getString("icon");
+                ShortcutInfo shortcutInfo = null;
+
+                if(jsonObject.has("iconType") && "base64".equals(jsonObject.getString("iconType"))) {
+                    byte[] decodedString = Base64.decode(icon, Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    shortcutInfo = new ShortcutInfo.Builder(this.cordova.getActivity(), jsonObject.getString("id"))
+                            .setShortLabel(jsonObject.getString("shortLabel"))
+                            .setLongLabel(jsonObject.getString("longLabel"))
+                            .setIcon(Icon.createWithBitmap(decodedByte))
+                            .setIntent(intent)
+                            .build();
+                } else {
+                    shortcutInfo = new ShortcutInfo.Builder(this.cordova.getActivity(), jsonObject.getString("id"))
+                            .setShortLabel(jsonObject.getString("shortLabel"))
+                            .setLongLabel(jsonObject.getString("longLabel"))
+                            .setIcon(Icon.createWithResource(context, context.getResources().getIdentifier(icon, "drawable", context.getPackageName())))
+                            .setIntent(intent)
+                            .build();
+                }
                 shortcutManager.setDynamicShortcuts(Arrays.asList(shortcutInfo));
                 callbackContext.success();
             } catch (JSONException e) {

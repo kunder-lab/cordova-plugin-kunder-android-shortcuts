@@ -17,6 +17,7 @@
   "homepage": "cordova-plugin-kunder-android-shortcuts#readme",
   "devDependencies": {},
   "dependencies": {
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "fs-extra": "5.0.0"
   }
 }

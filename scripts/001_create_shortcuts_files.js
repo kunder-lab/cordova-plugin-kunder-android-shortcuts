@@ -2,12 +2,13 @@
 'use strict';
 
 var fs = require('fs');
+var fse = require('fs-extra');
 
 module.exports = function(context) {
-	var android_shortcuts_file = fs.readFileSync('android-shortcuts.json', 'utf8');
+	var android_shortcuts_file = fs.readFileSync('android-shortcuts/shortcuts.json', 'utf8');
 	var android_shortcuts_json = JSON.parse(android_shortcuts_file);
 	if(!android_shortcuts_json) {
-		process.stdout.write('No "android-shortcuts.json" file found. Skipping process.');
+		process.stdout.write('No "shortcuts.json" file found. Skipping process.');
 	} else {
 		// process.stdout.write(android_shortcuts_file.toString() + '\n');
 		var cordova_util = context.requireCordovaModule('cordova-lib/src/cordova/util'),
@@ -120,7 +121,13 @@ module.exports = function(context) {
 		shortcutsXML = shortcutsXML + '\n</shortcuts>';
 		fs.writeFileSync('platforms/android/res/values/strings.xml', stringFile);
 		fs.writeFileSync('platforms/android/res/xml/shortcuts.xml', shortcutsXML);
-	}
 
-	
+		//Copying icons to android drawable folder
+		try {
+			fse.copySync('android-shortcuts/icons', 'platforms/android/res/drawable')
+		} catch (err) {
+			process.stdout.write('Copying android-shortcuts icons failure' + '\n');
+			process.stdout.write(err + '\n');
+		}
+	}
 };
