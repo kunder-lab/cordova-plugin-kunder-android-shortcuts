@@ -113,7 +113,7 @@ Es posible que la acción sea nula. En este caso, se debería ignorar.
 Se recomienda llamar a la función getSelectedShortcut cuando el evento "resume" sea llamado.
 
 ## Licencia
-[MIT License](https://github.com/kunder-lab/cordova-plugin-kunder-android-shortcuts/blob/master/LICENSE)
+[GNU GENERAL PUBLIC LICENSE version 3](https://github.com/kunder-lab/cordova-plugin-kunder-android-shortcuts/blob/master/LICENSE)
 
 ## Futuros features
 - Optimizar código

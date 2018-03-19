@@ -114,7 +114,7 @@ It is possible that getSelectedShortcut returns a response with null action. If 
 As a recomendation, you should call getSelectedShortcut when "resume" event is called.
 
 ## License
-[MIT License](https://github.com/kunder-lab/cordova-plugin-kunder-android-shortcuts/blob/master/LICENSE)
+[GNU GENERAL PUBLIC LICENSE version 3](https://github.com/kunder-lab/cordova-plugin-kunder-android-shortcuts/blob/master/LICENSE)
 
 ## Future releases
 - Optimize code

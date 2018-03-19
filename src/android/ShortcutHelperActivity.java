@@ -7,10 +7,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 
-/**
- * Created by sebastian on 3/2/18.
- */
-
 public class ShortcutHelperActivity extends Activity {
     private final static String TAG = "ShortcutHelperActivity";
     public static String ACTION = null;
