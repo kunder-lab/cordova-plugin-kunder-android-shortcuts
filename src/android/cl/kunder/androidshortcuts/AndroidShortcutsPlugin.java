@@ -42,7 +42,7 @@ public class AndroidShortcutsPlugin extends CordovaPlugin {
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
             }
         } else if("createDynamicShortcut".equals(action)) {
-            ShortcutManager shortcutManager = this.cordova.getActivity().getSystemService(ShortcutManager.class);
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
             if( (shortcutManager.getDynamicShortcuts().size() + shortcutManager.getManifestShortcuts().size()) >= 4) {
                 /**
                  * TODO
@@ -51,24 +51,24 @@ public class AndroidShortcutsPlugin extends CordovaPlugin {
                 callbackContext.error("You can not create more than 4 shortcuts");
                 return false;
             }
-            Intent intent = new Intent(this.cordova.getActivity().getApplicationContext(), ShortcutHelperActivity.class);
+            Intent intent = new Intent(context, ShortcutHelperActivity.class);
             try {
                 JSONObject jsonObject = new JSONObject(args.getString(0));
                 intent.setAction(jsonObject.getString("action"));
                 String icon = jsonObject.getString("icon");
                 ShortcutInfo shortcutInfo = null;
 
-                if(jsonObject.has("iconType") && "base64".equals(jsonObject.getString("iconType"))) {
+                if(jsonObject.has("iconIsBase64") && jsonObject.getBoolean("iconIsBase64")) {
                     byte[] decodedString = Base64.decode(icon, Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    shortcutInfo = new ShortcutInfo.Builder(this.cordova.getActivity(), jsonObject.getString("id"))
+                    shortcutInfo = new ShortcutInfo.Builder(context, jsonObject.getString("id"))
                             .setShortLabel(jsonObject.getString("shortLabel"))
                             .setLongLabel(jsonObject.getString("longLabel"))
                             .setIcon(Icon.createWithBitmap(decodedByte))
                             .setIntent(intent)
                             .build();
                 } else {
-                    shortcutInfo = new ShortcutInfo.Builder(this.cordova.getActivity(), jsonObject.getString("id"))
+                    shortcutInfo = new ShortcutInfo.Builder(context, jsonObject.getString("id"))
                             .setShortLabel(jsonObject.getString("shortLabel"))
                             .setLongLabel(jsonObject.getString("longLabel"))
                             .setIcon(Icon.createWithResource(context, context.getResources().getIdentifier(icon, "drawable", context.getPackageName())))
@@ -83,7 +83,7 @@ public class AndroidShortcutsPlugin extends CordovaPlugin {
             }
 
         } else if("removeAllDynamicShortcuts".equals(action)) {
-            ShortcutManager shortcutManager = this.cordova.getActivity().getSystemService(ShortcutManager.class);
+            ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
             shortcutManager.removeAllDynamicShortcuts();
             callbackContext.success();
         } else {

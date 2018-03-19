@@ -14,33 +14,46 @@ cordova plugin add https://github.com/kunder-lab/cordova-plugin-kunder-android-s
 
 ## Static shortcuts configuration
 
-Create a JSON file called android-shortcuts.json in the project's root folder with all the information about the shortcuts you want to create (maximum 4 shortcuts):
+In the project's root folder you should create the following file and folder distribution:
+
+````
+android-shortcuts
+├─── icons
+    └─── icon_1.png //Use words, numbers and "_" characters only.
+    └─── icon_2.png //These icons will be copied into Android drawable folder
+    ...
+    └─── icon_N.png
+└─── shortcuts.json
+````
+
+In the shortcuts.json file you should set all the information about the shortcuts you want to create (maximum 4 shortcuts. If you define more than 4, these will be ignored):
 
 ````
 {
     "shortcuts": [
         {
             "shortcutId": "ID_1",
-            "icon": "path/of/icon1.png",
-            "shortcutShortLabel": "Some Short Label 1",
-            "shortcutLongLabel": "Some Long Label 1",
-            "shortcutDisabledLabel": "Some shortcut disabled message 1",
-            "action": "SOME_ACTION_1"
+            "icon": "icon_1", // One of the icon names in android-shortcuts/icons without file extension.
+            "shortcutShortLabel": "Short Label 1",
+            "shortcutLongLabel": "Long Label 1",
+            "shortcutDisabledLabel": "Disabled message 1",
+            "action": "ACTION_1"
         },
         ...
         {
-            "shortcutId": "ID_4",
-            "icon": "path/of/icon4.png",
-            "shortcutShortLabel": "Some Short Label 4",
-            "shortcutLongLabel": "Some Long Label 4",
-            "shortcutDisabledLabel": "Some shortcut disabled message 4",
-            "action": "SOME_ACTION_4"
+            "shortcutId": "ID_2",
+            "icon": "icon_2", // One of the icon names in android-shortcuts/icons without file extension.
+            "shortcutShortLabel": "Short Label 2",
+            "shortcutLongLabel": "Long Label 2",
+            "shortcutDisabledLabel": "Disabled message 2",
+            "action": "ACTION_2"
         }
     ]
 }
 ````
 
-To improve launch performance you should set the following into config.xml file:
+To improve the app launch performance you should set the following code into config.xml file:
+
 ````
 ... <platform name="android">
         <preference name="AndroidLaunchMode" value="singleInstance" />
@@ -58,9 +71,10 @@ AndroidShortcutsPlugin.createDynamicShortcut(
     {
         id: 'someID',
         action: 'someAction',
-        shortLabel: 'ShortLabel',
-        longLabel: 'LongLabel',
-        icon: 'BASE64_String_icon'
+        shortLabel: 'ShortLabel', //String. This is the shortcut shown when user long press over the icon when it is located in the home screen.
+        longLabel: 'LongLabel', //String. This is the shortcut shown when user long press over the icon when it is located in the app drawer.
+        icon: 'BASE64_String_icon', //String, should be the base64 icon or the name of this without extension. 
+        iconIsBase64: 'true' // (Optional) Boolean. Flag that indicates if the icon is base64 String or not. False by default.
     },
     successCallback,
     errorCallback
